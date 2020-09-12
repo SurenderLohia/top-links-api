@@ -2,9 +2,9 @@ var express = require('express');
 const passport = require("passport");
 var router = express.Router();
 
-var auth_controller = require('../controllers/authController');
-
 const CLIENT_HOME_PAGE_URL = "http://localhost:3000";
+
+var auth_controller = require('../controllers/authController');
 
 // auth with twitter
 router.get("/twitter", passport.authenticate("twitter"));

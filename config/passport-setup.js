@@ -10,10 +10,10 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser((id, done) => {
   User.findById(id)
-    .then(user => {
+    .then((user) => {
       done(null, user);
     })
-    .catch(e => {
+    .catch((e) => {
       done(new Error("Failed to deserialize an user"));
     });
 });
@@ -23,22 +23,21 @@ passport.use(
     {
       consumerKey: keys.TWITTER_CONSUMER_KEY,
       consumerSecret: keys.TWITTER_CONSUMER_SECRET,
-      callbackURL: "/auth/twitter/redirect"
+      callbackURL: "/auth/twitter/redirect",
     },
     async (token, tokenSecret, profile, done) => {
       const currentUser = await User.findOne({
-        twitterId: profile._json.id_str
+        twitterId: profile._json.id_str,
       });
-
-      console.log('profile');
-      console.log(profile);
 
       if (!currentUser) {
         const newUser = await new User({
           name: profile._json.name,
           screenName: profile._json.screen_name,
           twitterId: profile._json.id_str,
-          profileImageUrl: profile._json.profile_image_url
+          profileImageUrl: profile._json.profile_image_url,
+          access_token_key: token,
+          access_token_secret: tokenSecret,
         }).save();
         if (newUser) {
           done(null, newUser);
