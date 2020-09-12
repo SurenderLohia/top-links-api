@@ -12,10 +12,15 @@ exports.get_tweets = function (req, res) {
     access_token_secret: req.user.access_token_secret,
   });
 
-  T.get("statuses/home_timeline", { count: 5 }, function (err, data, response) {
-    console.log("finnaly");
-    console.log(data);
+  T.get("statuses/home_timeline", function (err, data, response) {
+    console.log("all");
+    console.log(data.length);
 
-    res.json(data);
+    const tweetsWithLink = data.filter((tweet) => {
+      return tweet.entities.urls.length > 0;
+    });
+
+    console.log(tweetsWithLink.length);
+    res.json(tweetsWithLink);
   });
 };
