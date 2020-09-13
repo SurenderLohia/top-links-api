@@ -17,11 +17,13 @@ async function createTweet(tweet, userTwitterId, cb) {
       text: tweet.text,
       created_at: tweet.created_at,
       entity_url: tweet.entities.urls,
+      entity_hashtags: tweet.entities.hashtags,
       user: {
         name: tweet.user.name,
         screenName: tweet.user.screen_name,
         twitterId: tweet.user.id,
         profileImageUrl: tweet.user.profile_image_url,
+        location: tweet.user.location,
       },
     });
 
@@ -57,7 +59,7 @@ exports.get_tweets_contain_links = function (req, res) {
       tweetsWithLink,
       async function (tweet) {
         await createTweet(tweet, userTwitterId, function () {
-          console.log("Created tweet: ", tweet.id);
+          console.log("Tweet available now: ", tweet.id);
         });
       },
       async (err, results) => {
@@ -65,7 +67,6 @@ exports.get_tweets_contain_links = function (req, res) {
           return console.error(err);
         }
         const tweets = await Tweet.find({ authUserTwitterId: userTwitterId });
-        console.log(tweets);
         res.json(tweets);
       }
     );

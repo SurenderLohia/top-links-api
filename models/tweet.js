@@ -6,6 +6,7 @@ const UserSchema = new Schema({
   screenName: String,
   twitterId: String,
   profileImageUrl: String,
+  location: String,
 });
 
 const EntityUrlSchema = new Schema({
@@ -20,6 +21,7 @@ const TweetSchema = new Schema({
   text: String,
   created_at: Date,
   entity_url: [EntityUrlSchema],
+  entity_hastags: [String],
   user: UserSchema,
 });
 

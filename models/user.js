@@ -8,6 +8,7 @@ const UserSchema = new Schema({
   profileImageUrl: String,
   access_token_key: String,
   access_token_secret: String,
+  location: String,
 });
 
 module.exports = mongoose.model("User", UserSchema);

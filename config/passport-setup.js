@@ -38,6 +38,7 @@ passport.use(
           profileImageUrl: profile._json.profile_image_url,
           access_token_key: token,
           access_token_secret: tokenSecret,
+          location: profile._json.location,
         }).save();
         if (newUser) {
           done(null, newUser);
