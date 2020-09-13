@@ -6,6 +6,9 @@ const keys = require("../config/keys");
 
 const twitterApiController = require("../controllers/twittertApiController");
 
-router.get("/get-tweets", twitterApiController.get_tweets);
+router.get(
+  "/get-tweets-contain-link",
+  twitterApiController.get_tweets_contain_links
+);
 
 module.exports = router;
