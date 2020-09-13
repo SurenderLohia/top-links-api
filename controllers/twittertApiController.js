@@ -4,29 +4,38 @@ var async = require("async");
 const keys = require("../config/keys");
 const Tweet = require("../models/tweet");
 
-function createTweet(tweet, userTwitterId, cb) {
-  const newTweet = new Tweet({
+async function createTweet(tweet, userTwitterId, cb) {
+  const currentTweet = await Tweet.findOne({
     authUserTwitterId: userTwitterId,
     id: tweet.id,
-    text: tweet.text,
-    created_at: tweet.created_at,
-    entity_url: tweet.entities.urls,
-    user: {
-      name: tweet.user.name,
-      screenName: tweet.user.screen_name,
-      twitterId: tweet.user.id,
-      profileImageUrl: tweet.user.profile_image_url,
-    },
   });
 
-  newTweet.save(function (err) {
-    if (err) {
-      cb(err, null);
-      return;
-    }
+  if (!currentTweet) {
+    const newTweet = new Tweet({
+      authUserTwitterId: userTwitterId,
+      id: tweet.id,
+      text: tweet.text,
+      created_at: tweet.created_at,
+      entity_url: tweet.entities.urls,
+      user: {
+        name: tweet.user.name,
+        screenName: tweet.user.screen_name,
+        twitterId: tweet.user.id,
+        profileImageUrl: tweet.user.profile_image_url,
+      },
+    });
 
-    cb(null, tweet);
-  });
+    newTweet.save(function (err) {
+      if (err) {
+        cb(err, null);
+        return;
+      }
+
+      cb(null, tweet);
+    });
+  }
+
+  cb(null, tweet);
 }
 
 exports.get_tweets_contain_links = function (req, res) {
