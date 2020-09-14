@@ -1,10 +1,10 @@
-var express = require('express');
+var express = require("express");
 const passport = require("passport");
 var router = express.Router();
 
-const CLIENT_HOME_PAGE_URL = "http://localhost:3000";
+const CLIENT_HOME_PAGE_URL = "http://localhost:3000/home";
 
-var auth_controller = require('../controllers/authController');
+var auth_controller = require("../controllers/authController");
 
 // auth with twitter
 router.get("/twitter", passport.authenticate("twitter"));
@@ -17,7 +17,7 @@ router.get(
   "/twitter/redirect",
   passport.authenticate("twitter", {
     successRedirect: CLIENT_HOME_PAGE_URL,
-    failureRedirect: "/auth/login/failed"
+    failureRedirect: "/auth/login/failed",
   })
 );
 

@@ -22,5 +22,5 @@ exports.login_failed = function (req, res) {
 
 exports.logout = function (req, res) {
   req.logout();
-  res.redirect(CLIENT_HOME_PAGE_URL);
+  res.redirect(CLIENT_LOGIN_PAGE_URL);
 };
