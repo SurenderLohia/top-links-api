@@ -2,7 +2,8 @@ var express = require("express");
 const passport = require("passport");
 var router = express.Router();
 
-const CLIENT_HOME_PAGE_URL = "http://localhost:3000/home";
+//const CLIENT_HOME_PAGE_URL = "http://localhost:3000/home";
+const CLIENT_HOME_PAGE_URL = "https://top-links.surge.sh/home";
 
 var auth_controller = require("../controllers/authController");
 
