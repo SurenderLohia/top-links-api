@@ -36,7 +36,7 @@ app.use(passport.session());
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "https://top-links.surge.sh",
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
   })
