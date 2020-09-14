@@ -1,4 +1,5 @@
 const passport = require("passport");
+const CLIENT_LOGIN_PAGE_URL = "http://localhost:3000";
 
 exports.login_success = function (req, res) {
   if (req.user) {

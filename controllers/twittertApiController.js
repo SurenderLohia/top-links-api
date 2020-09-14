@@ -51,6 +51,12 @@ exports.get_tweets_contain_links = function (req, res) {
   const userTwitterId = req.user.twitterId;
 
   T.get("statuses/home_timeline", async function (err, data, response) {
+    if (err) {
+      console.log(err);
+      // if twiter api rate limit exceeded, get stored tweets from db and send it
+      const tweets = await Tweet.find({ authUserTwitterId: userTwitterId });
+      res.json(tweets);
+    }
     const tweetsWithLink = data.filter((tweet) => {
       return tweet.entities.urls.length > 0;
     });
@@ -66,7 +72,9 @@ exports.get_tweets_contain_links = function (req, res) {
         if (err) {
           return console.error(err);
         }
-        const tweets = await Tweet.find({ authUserTwitterId: userTwitterId });
+        const tweets = await Tweet.find({
+          authUserTwitterId: userTwitterId,
+        }).sort({ created_at: -1 });
         res.json(tweets);
       }
     );
