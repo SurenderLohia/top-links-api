@@ -1,8 +1,24 @@
 const Twit = require("twit");
-var async = require("async");
+const async = require("async");
+const { groupBy } = require("lodash");
 
 const keys = require("../config/keys");
 const Tweet = require("../models/tweet");
+
+const getTopUser = (userGroups) => {
+  let topUserLinksCount = -Infinity;
+  let topUser;
+
+  Object.keys(userGroups).forEach((key) => {
+    const item = userGroups[key];
+    if (item.length > topUserLinksCount) {
+      topUserLinksCount = item.length;
+      topUser = item;
+    }
+  });
+
+  return topUser[0].user;
+};
 
 async function createTweet(tweet, userTwitterId, cb) {
   const currentTweet = await Tweet.findOne({
@@ -75,7 +91,14 @@ exports.get_tweets_contain_links = function (req, res) {
         const tweets = await Tweet.find({
           authUserTwitterId: userTwitterId,
         }).sort({ created_at: -1 });
-        res.json(tweets);
+
+        const userGroups = groupBy(tweets, "user.screenName");
+        const topUser = getTopUser(userGroups);
+
+        res.json({
+          tweets,
+          topUser,
+        });
       }
     );
   });
