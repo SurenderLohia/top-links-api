@@ -70,8 +70,19 @@ exports.get_tweets_contain_links = function (req, res) {
     if (err) {
       console.log(err);
       // if twiter api rate limit exceeded, get stored tweets from db and send it
-      const tweets = await Tweet.find({ authUserTwitterId: userTwitterId });
-      res.json(tweets);
+      const tweets = await Tweet.find({
+        authUserTwitterId: userTwitterId,
+      }).sort({ created_at: -1 });
+
+      const userGroups = groupBy(tweets, "user.screenName");
+      const topUser = getTopUser(userGroups);
+
+      res.json({
+        tweets,
+        topUser,
+      });
+
+      res.json({ tweets, topUser: {} });
     }
     const tweetsWithLink = data.filter((tweet) => {
       return tweet.entities.urls.length > 0;
