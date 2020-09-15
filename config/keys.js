@@ -7,7 +7,9 @@ const DB_USER = "nallavan";
 const DB_PASSWORD = "chinnaDb_321";
 const DB_NAME = "top_links";
 const MONGODB = {
-  MONGODB_URI: `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.femwi.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`,
+  //MONGODB_URI: `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.femwi.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`,
+  MONGODB_URI:
+    "mongodb+srv://nallavan:chinnaDb_321@cluster0.femwi.mongodb.net/top_links?retryWrites=true&w=majority",
 };
 
 const SESSION = {
