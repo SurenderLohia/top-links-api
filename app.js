@@ -14,6 +14,8 @@ const passportSetup = require("./config/passport-setup");
 const authRouter = require("./routes/auth");
 const twitterApiRouter = require("./routes/twitter-api");
 
+const ENDPOINTS = require("./config/endpoints");
+
 const app = express();
 
 mongoose.connect(keys.MONGODB_URI, {
@@ -36,7 +38,7 @@ app.use(passport.session());
 
 app.use(
   cors({
-    origin: "https://top-links.surge.sh",
+    origin: ENDPOINTS.CLIENT_BASE_URL,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
   })

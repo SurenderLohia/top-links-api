@@ -1,6 +1,7 @@
 const passport = require("passport");
-//const CLIENT_LOGIN_PAGE_URL = "http://localhost:3000";
-const CLIENT_LOGIN_PAGE_URL = "https://top-links.surge.sh";
+//const CLIENT_LOGIN_PAGE_URL = "http://localhost:3000/login";
+//const CLIENT_LOGIN_PAGE_URL = "https://top-links.surge.sh";
+const ENDPOINTS = require("../config/endpoints");
 
 exports.login_success = function (req, res) {
   if (req.user) {
@@ -23,5 +24,5 @@ exports.login_failed = function (req, res) {
 
 exports.logout = function (req, res) {
   req.logout();
-  res.redirect(CLIENT_LOGIN_PAGE_URL);
+  res.redirect(ENDPOINTS.CLIENT_LOGIN_PAGE_URL);
 };
